@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>Student Portfolio</title>
+
+ <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Roboto+Slab:wght@400;700&family=Montserrat:wght@400;600&family=Playfair+Display:wght@400;700&family=Lobster&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif;}
+body{background:linear-gradient(120deg,#000,#222);color:white;overflow-x:hidden;transition:background 1s ease;}
+.navbar{
+  position:fixed;top:20px;left:50%;transform:translateX(-50%);
+  display:flex;align-items:center;justify-content:space-between;
+  width:70%;padding:12px 30px;border-radius:30px;z-index:10;
+  backdrop-filter:blur(20px);background:rgba(255,255,255,0.05);
+  border:1px solid rgba(255,255,255,0.1);
+}
+.navbar h2{margin-right:20px;}
+nav{display:flex;justify-content:space-between;flex:1;}
+nav a{color:white;text-decoration:none;opacity:.7;font-weight:500;font-size:16px;}
+nav a:hover{opacity:1;}
+.center{text-align:center;margin-top:0px;} /* Reduced margin-top for headings */
+.hero{height:60vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;gap:20px;}
+.hero h1{font-size:64px;font-weight:600;}
+.hero p{opacity:.6;}
+.glass-btn{padding:12px 30px;border-radius:30px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);color:white;cursor:pointer;}
+.card{max-width:700px;margin:40px auto;padding:30px;border-radius:20px;transition:transform .2s;position:relative;overflow:hidden;background:rgba(255,255,255,0.05);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.1);text-align:center;}
+.card::before{content:"";position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:linear-gradient(120deg,transparent,rgba(255,255,255,.2),transparent);transform:rotate(25deg);animation:shine 6s infinite;}
+@keyframes shine{0%{transform:translateX(-100%) rotate(25deg);}100%{transform:translateX(100%) rotate(25deg);}}
+.tilt:hover{cursor:pointer;}
+.skills-block{display:flex;flex-wrap:wrap;gap:30px;justify-content:center;margin-top:20px;margin-bottom:80px;}
+.skills-block .block{background:rgba(255,255,255,0.05);padding:30px;border-radius:20px;min-width:220px;text-align:center;transition:0.3s;cursor:pointer;}
+.skills-block .block:hover{transform:scale(1.05);}
+.skills-block .block img{width:50px;height:50px;margin-bottom:10px;border-radius:10px;object-fit:cover;} /* Skill images */
+.language-bar{margin-top:20px;margin-bottom: 50px ;max-width:500px;margin-left:auto;margin-right:auto;}
+.language-bar .lang-item{margin-bottom:15px;text-align:left;}
+.language-bar .lang-name{display:flex;justify-content:space-between;font-weight:500;margin-bottom:5px;}
+.language-bar .bar{background:#222;height:10px;border-radius:10px;overflow:hidden;}
+.language-bar .bar span{display:block;height:100%;background:white;transition:width 0.5s ease;}
+.img-block{display:flex;align-items:center;gap:20px;margin:50px auto;max-width:700px;text-align:left;}
+.img-block img{width:150px;height: 150px;border-radius:15px;object-fit:cover;}
+.img-block .content{flex:1;}
+.hobby-content{margin-top:10px;text-align:left;opacity:.8;}
+.results-container{display:flex;justify-content:center;gap:20px;flex-wrap:wrap;margin-top:20px;margin-bottom:80px;}
+.result-block{width:180px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:15px;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;transition:0.3s;padding:15px;min-height:180px;}
+.result-block h4{margin-bottom:10px;}
+.result-block p{opacity:.8;font-size:14px;text-align:center;}
+.reveal{opacity:0;transform:translateY(40px);transition:1s;}
+.reveal.active{opacity:1;transform:translateY(0);}
+#particles{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-2;}
+footer{text-align:center;padding:40px;opacity:.6;}
+form{display:flex;flex-direction:column;gap:15px;margin-top:15px;}
+input,textarea{padding:12px;background:#111;border:1px solid #333;color:white;border-radius:8px;}
+#contact .card{margin-bottom:30px;}
+
+
+#about h2.center { font-family: 'Playfair Display', serif; font-size:38px; }
+#education h2.center { font-family: 'Playfair Display', serif; font-size:38px; }
+#courses h2.center { font-family: 'Playfair Display', serif; font-size:38px; }
+#skills h2.center { font-family: 'Playfair Display', serif; font-size:38px; }
+#language h2.center { font-family: 'Playfair Display', serif; font-size:38px; }
+#hobbies h2.center { font-family: 'Playfair Display', serif; font-size:38px; }
+#achievements h2.center { font-family: 'Playfair Display', serif; font-size:38px; }
+#results h2.center { font-family: 'Playfair Display', serif; font-size:38px; }
+#contact h2.center { font-family: 'Playfair Display', serif; font-size:38px; }
+
+</style>
+</head>
+<body>
+
+<canvas id="particles"></canvas>
+
+<header class="navbar glass">
+ <h2>MS</h2>
+  <nav>
+   <a href="#about">About</a>
+   <a href="#education">Education</a>
+   <a href="#hobbies">Skillset</a>
+   <a href="#achievements">Achievements</a>
+   <a href="#courses">Courses</a>
+   <a href="#language">Language</a>
+   <a href="#skills">Hobbies</a>
+   <a href="#contact">Contact</a>
+  </nav>
+</header>
+
+<section class="hero">
+ <h1>Hello, I'm <span>Mridul Sapra</span></h1>
+ <p>IIMB DBE Student • Aspiring Chartered Accountant • 3d Artist </p>
+ <button class="glass-btn" onclick="document.getElementById('about').scrollIntoView({behavior:'smooth'})">Explore</button>
+</section>
+
+
+<section id="about" class="card glass reveal">
+ <h2 class="center">About Me</h2>
+ <p>I am a student exploring the intersection of finance, technology, and creativity. Through coding, web development, and 3D animation, I enjoy transforming ideas into projects and learning by building.</p>
+</section>
+
+
+<section id="education">
+ <h2 class="center">Education</h2>
+ <div class="img-block card glass tilt">
+   <img src="images/College.png" alt="IIMB DBE">
+    <div class="content"><h3>Indian Institute of Management Bangalore</h3>
+     <p>Bachelor of Business Administration in Digital Business & Entrepreneurship</p>
+     <h4 style="color: peachpuff; font-size: 18px; margin-top: 18px;" > Ongoing </h4>
+    </div>
+  </div>
+
+  <div class="img-block card glass tilt">
+   <img src="images/ICAI.png" alt="ICAI">
+    <div class="content"><h3> Institute of Chartered Accountants of India </h3>
+     <p>CA Foundation : Distinction | CA Intermediate : Pursuing </p>
+     <h4 style="color: peachpuff; font-size: 18px; margin-top: 18px;" > Ongoing </h4>
+    </div>
+  </div>
+
+  <div class="img-block card glass tilt">
+   <img src="images/School.png" alt="School">
+    <div class="content"><h3>Saint Paul's Sr. Sec. School, Mala Road, Kota</h3><p> XII ( CBSE ) : 94.8% ( Commerce ) - School Rank : 2nd</p><p> X ( CBSE ) : 90.6%</p>
+     <h4 style="color: lightcoral; font-size: 18px; margin-top: 18px;" > Completed </h4>
+    </div>
+  </div>
+</section>
+
+
+<section id="hobbies">
+ <h2 class="center">Skillset</h2>
+  <div class="img-block card glass tilt">
+   <img src="images/FIN.png" alt="Fin">
+    <div class="content"><h3>Financial Tools</h3>
+     <p class="hobby-content">Excel, Tally Prime, SPSS(Basics), SAP</p>
+    </div>
+  </div>
+
+  <div class="img-block card glass tilt">
+   <img src="images/ANALYSIS.png" alt="DA">
+    <div class="content"><h3>Data Analyisis Tools</h3>
+     <p class="hobby-content">Power BI, SQL </p>
+    </div>
+  </div>
+
+  <div class="img-block card glass tilt">
+   <img src="images/DEV.png" alt="APPdev">
+    <div class="content"><h3>APP/GAME Development</h3>
+     <p class="hobby-content">C#, JAVA, Unity, UE5 </p>
+    </div>
+  </div>
+
+  <div class="img-block card glass tilt">
+   <img src="images/WEB.png" alt="WEBdev">
+    <div class="content"><h3>WEB Development</h3>
+     <p class="hobby-content">HTML, CSS, JS, PYTHON (Backend) </p>
+    </div>
+  </div>
+</section>
+
+
+<section id="achievements">
+ <h2 class="center">Achievements</h2>
+  <div class="img-block card glass tilt">
+   <img src="images/ICO.png" alt="Olympiads">
+   <div class="content"><h3>Olympiads</h3><p>SOF International Commerce Olympiad : School Rank - 1st | International Mathematics Olympiad : School Rank - 3rd</p></div>
+  </div>
+
+  <div class="img-block card glass tilt">
+   <img src="images/NAVY.jpg" alt="G20">
+   <div class="content"><h3>G20 THINQ Navy Quiz 2024</h3><p>Qualified till Round 3 ( District ) of 5</p></div>
+  </div>
+</section>
+
+
+<section id="courses">
+ <h2 class="center">Courses</h2>
+  <div class="img-block card glass tilt">
+   <img src="images/FORWARD Program.jpg" alt="McKinsey" >
+   <div class="content"><h3>McKinsey Forward Program</h3><p>Digital Literacy, AI essentials, Communication & Leadership</p></div>
+  </div>
+
+  <div class="img-block card glass tilt">
+    <img src="images/FORAGE.png" alt="Forage">
+    <div class="content"><h3>Forage Job Simulations </h3>
+     <p>KPMG ( Career Catalyst ) : Audit, Advisory, Tax </p><p>Deloitte : Data Analytics</p>
+     <p>BCG : Strategy Consulting </p><p> PWC : Consulting ( Management , Tech. , Cyber Security )</p>
+    </div>
+  </div>
+</section>
+
+
+
+
+<section id="language">
+ <h2 class="center">Languages</h2>
+  <div class="language-bar">
+    <div class="lang-item">
+     <div class="lang-name"><span>English</span><span>Bilingual Proficiency</span></div>
+     <div class="bar"><span style="width:100%"></span></div>
+    </div>
+
+    <div class="lang-item">
+     <div class="lang-name"><span>Hindi</span><span>Bilingual Proficiency</span></div>
+     <div class="bar"><span style="width:100%"></span></div>
+    </div>
+
+    <div class="lang-item">
+     <div class="lang-name"><span>Japanese</span><span>Elementary Proficiency</span></div>
+     <div class="bar"><span style="width:30%"></span></div>
+    </div>
+  </div>
+</section>
+
+
+
+<section id="skills">
+ <h2 class="center">Hobbies</h2>
+  <div class="skills-block">
+    <div class="block">
+     <img src="images/image 47.png" alt="piano">
+     <h3>Piano</h3>
+     <p>Intermediate Piano Player with 3 years of experience.</p>
+    </div>
+    <div class="block">
+     <img src="images/image 49.png" alt="guitar">
+     <h3>Guitar</h3>
+     <p>Acoustic Guitar, Composing music.</p>
+    </div>
+    <div class="block">
+     <img src="images/SPORT.png" alt="Basketball">
+     <h3>Sports</h3>
+     <p>Basketball ( Inter House - Winner ), Badminton</p>
+    </div>
+    <div class="block">
+     <img src="images/CHESS.png" alt="Chess">
+     <h3>Chess</h3>
+     <p>Rotary Chess Tournament - 2nd position</p>
+    </div>
+    <div class="block">
+     <img src="images/3d.png" alt="Cube">
+     <h3>3D Animation</h3>
+     <p>Created 3D - Models, Animations, and Short Ads - <a href="https://www.youtube.com/@RajkamalMachineryPlastics" target="_blank" style="color:#fff;text-decoration:underline;">Click Here</a></p>
+    </div>
+  </div>
+</section>
+
+
+
+
+
+<section id="contact">
+ <h2 class="center">Contact</h2>
+   <div class="card glass">
+     <h3>Send Message</h3>
+     <form style="margin-top:25px;">
+       <input type="text" placeholder="Your Name" required>
+       <input type="email" placeholder="Your Email" required>
+       <textarea placeholder="Your Message" rows="5" required></textarea>
+       <button class="glass-btn">Send</button>
+     </form>
+   </div>
+</section>
+
+<footer>
+ <p>By Mridul Sapra, IIMB DBE Student 2025-2028</p>
+</footer>
+
+<script>
+
+document.querySelectorAll(".tilt").forEach(card=>{
+  card.addEventListener("mousemove",e=>{
+    let rect=card.getBoundingClientRect();
+    let x=e.clientX-rect.left;
+    let y=e.clientY-rect.top;
+    let centerX=rect.width/2;
+    let centerY=rect.height/2;
+    let rotateX=-(y-centerY)/10;
+    let rotateY=(x-centerX)/10;
+    card.style.transform=`rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+  });
+  card.addEventListener("mouseleave",()=>{card.style.transform="rotateX(0) rotateY(0)";});
+});
+
+const reveals=document.querySelectorAll(".reveal");
+function reveal(){reveals.forEach(el=>{let top=el.getBoundingClientRect().top;if(top<window.innerHeight-100){el.classList.add("active");}});}
+window.addEventListener("scroll",reveal);
+
+const canvas=document.getElementById("particles");
+const ctx=canvas.getContext("2d");
+canvas.width=window.innerWidth;canvas.height=window.innerHeight;
+let particles=[];
+for(let i=0;i<80;i++){particles.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,vx:(Math.random()-0.5),vy:(Math.random()-0.5)});}
+let mouse={x:0,y:0};
+window.addEventListener("mousemove",e=>{mouse.x=e.clientX;mouse.y=e.clientY;});
+function animateParticles(){ctx.clearRect(0,0,canvas.width,canvas.height);particles.forEach(p=>{p.x+=p.vx;p.y+=p.vy;let dx=p.x-mouse.x;let dy=p.y-mouse.y;let dist=Math.sqrt(dx*dx+dy*dy);if(dist<120){p.x+=dx*0.02;p.y+=dy*0.02;}ctx.beginPath();ctx.arc(p.x,p.y,2,0,Math.PI*2);ctx.fillStyle="white";ctx.fill();});requestAnimationFrame(animateParticles);}
+animateParticles();
+
+const gradients=["linear-gradient(120deg,#000000,#222222)","linear-gradient(120deg,#000000,#444444)","linear-gradient(120deg,#111111,#555555)","linear-gradient(120deg,#000000,#666666)","linear-gradient(120deg,#222222,#777777)","linear-gradient(120deg,#000000,#888888)","linear-gradient(120deg,#111111,#999999)"];
+document.addEventListener("click",(e)=>{if(e.target.closest("button")||e.target.closest("a")||e.target.closest("input")||e.target.closest("textarea")||e.target.closest(".card")) return;let random=gradients[Math.floor(Math.random()*gradients.length)];document.body.style.background=random;});
+</script>
+
+</body>
+</html>
